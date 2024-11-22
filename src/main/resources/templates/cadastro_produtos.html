@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Produtos</title>
+    <style>
+        /* Reset de estilos básicos */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Estilos globais */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f4f8;
+            line-height: 1.6;
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Container principal */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section, .table-section {
+            margin-bottom: 40px;
+        }
+
+        /* Formulário */
+        form {
+            display: grid;
+            gap: 20px;
+        }
+
+        label {
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        input[type="text"], input[type="number"] {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            width: 100%;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            padding: 12px 30px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Tabela de produtos */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 1.1rem;
+        }
+
+        th {
+            background-color: #f9fafb;
+            color: #333;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .actions a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 4px;
+            background-color: #e7f3fe;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        .actions a:hover {
+            background-color: #c6e2ff;
+            transform: scale(1.05);
+        }
+
+        /* Botão Voltar */
+        .back-button-container {
+            text-align: center;
+        }
+
+        .back-button-container button {
+            padding: 12px 30px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        .back-button-container button:hover {
+            background-color: #5a6268;
+            transform: scale(1.05);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            button {
+                font-size: 1rem;
+            }
+
+            table th, table td {
+                font-size: 1rem;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <body>
+
+        <h1>Cadastro de Produtos</h1>
+    
+        <div class="container">
+            <!-- Exibir mensagem de sucesso -->
+            <div th:if="${sucesso}" class="alert alert-success">
+                <p th:text="${sucesso}"></p>
+            </div>
+    
+            <!-- Formulário de Cadastro -->
+            <div class="form-section">
+                <h2>Adicionar Produto</h2>
+                <form id="produtoForm" action="/produtos/salvar" method="POST">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" required>
+                
+                    <label for="descricao">Descrição:</label>
+                    <input type="text" id="descricao" name="descricao" required>
+                
+                    <label for="preco">Preço:</label>
+                    <input type="number" id="preco" name="preco" step="0.01" required>
+                
+                    <button class="add-product-button" type="submit">Adicionar Produto</button>
+                </form>
+            </div>
+    
+            <!-- Tabela de Produtos -->
+            <div class="table-section">
+                <h2>Produtos Cadastrados</h2>
+                <table id="produtosTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+                            <th>Preço</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="produto : ${produtos}">
+                            <td th:text="${produto.id}"></td>
+                            <td th:text="${produto.nome}"></td>
+                            <td th:text="${produto.descricao}"></td>
+                            <td th:text="${produto.preco}"></td>
+                            <td class="actions">
+                                <a th:href="@{/produtos/editar/{id}(id=${produto.id})}">Editar</a> |
+                                <a th:href="@{/produtos/deletar/{id}(id=${produto.id})}">Deletar</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    
+            <!-- Botão Voltar -->
+            <div class="back-button-container">
+                <button onclick="window.location.href='/relatorios';" class="back-button">Voltar ao Menu Inicial</button>
+            </div>
+        </div>    
+
+</body>
+</html>

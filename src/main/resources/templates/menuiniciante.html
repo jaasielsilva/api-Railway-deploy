@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Funcionário</title>
+    <style>
+        /* Resetting default browser styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Main container */
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+        }
+
+        .container h1 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .container ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .container ul li {
+            margin: 15px 0;
+        }
+
+        .container ul li a {
+            font-size: 18px;
+            color: #2c3e50;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            display: inline-block;
+            transition: background-color 0.3s;
+            width: 200px;
+        }
+
+        .container ul li a:hover {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        .footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Bem-vindo ao Menu do Funcionário</h1>
+        <ul>
+            <li><a href="/visualizarTarefas">Visualizar Tarefas</a></li>
+            <li><a href="/relatoriosparainiciante">Visualizar Relatórios</a></li>
+            <li><a href="/configuracoes">Configurações</a></li>
+        </ul>
+
+        <div class="footer">
+            <p>&copy; 2024 Sistema de Gestão de Funcionários. Todos os direitos reservados.</p>
+            <p><a href="#">Política de Privacidade</a> | <a href="#">Termos de Uso</a></p>
+        </div>
+    </div>
+
+</body>
+</html>

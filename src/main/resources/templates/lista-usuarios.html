@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Usuários - Painel do CEO</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Seu CSS permanece o mesmo */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .admin-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: row;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+
+        .sidebar {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            width: 250px;
+            border-radius: 8px 0 0 8px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .sidebar h2 {
+            font-size: 24px;
+            margin-bottom: 30px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 15px;
+        }
+
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 5px;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #34495e;
+        }
+
+        .main-content {
+            padding: 40px;
+            width: 100%;
+            max-width: 850px;
+        }
+
+        .main-content h1 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .user-table-container {
+            background-color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-table-container h3 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #34495e;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #2c3e50;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .table-scroll-container {
+            max-height: 250px; /* Defina a altura máxima da área rolável */
+            overflow-y: auto; /* Adiciona a rolagem vertical */
+            margin-top: 20px;
+        }
+
+        .footer {
+            margin-top: 50px;
+            font-size: 16px;
+            color: #7f8c8d;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Painel do CEO</h2>
+            <ul>
+                <li><a href="/relatorios"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="/suarios"><i class="fas fa-users"></i> Usuários</a></li>
+                <li><a href="/configuracoes"><i class="fas fa-cogs"></i> Configurações</a></li>
+                <li><a href="/relatorio-sistemas"><i class="fas fa-chart-line"></i> Relatórios</a></li>
+                <li><a href="/recursos-humanos"><i class="fas fa-users-cog"></i> RH</a></li>
+                <li><a href="#"><i class="fas fa-project-diagram"></i> Projetos</a></li>
+                <li><a href="/produtos"><i class="fas fa-box"></i> Produtos</a></li>
+                <li><a href="/" class="logout"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <h1>Listar Usuários</h1>
+            <h2>Veja todos os usuários cadastrados no sistema.</h2>
+
+            <!-- User Table -->
+            <div class="user-table-container">
+                <h3>Usuários Cadastrados</h3>
+                <div class="table-scroll-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usuarios-table-body">
+                            <!-- Linhas de usuários serão adicionadas aqui dinamicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>Portal Exclusivo para o CEO - <a href="/">Sair</a></p>
+                <p>&copy; 2024 Sistema de Relatórios. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Função para buscar usuários via API e preencher a tabela
+        async function carregarUsuarios() {
+            try {
+                const response = await fetch('/api/usuarios'); // Chama o endpoint da API
+                const usuarios = await response.json(); // Obtém os dados no formato JSON
+
+                const tabela = document.getElementById('usuarios-table-body');
+                tabela.innerHTML = ''; // Limpa a tabela antes de preencher
+
+                usuarios.forEach(usuario => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${usuario.id}</td>
+                        <td>${usuario.nome}</td>
+                        <td>${usuario.email}</td>
+                        <td>${usuario.status}</td>
+                        <td>
+                            <button onclick="editarUsuario(${usuario.id})">Editar</button>
+                            <button onclick="deletarUsuario(${usuario.id})">Deletar</button>
+                        </td>
+                    `;
+                    tabela.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar usuários:', error);
+            }
+        }
+
+        // Funções de exemplo para editar e deletar
+        function editarUsuario(id) {
+            alert(`Editar usuário com ID: ${id}`);
+        }
+
+        function deletarUsuario(id) {
+            alert(`Deletar usuário com ID: ${id}`);
+        }
+
+        // Carrega os usuários quando a página é carregada
+        document.addEventListener('DOMContentLoaded', carregarUsuarios);
+    </script>
+</body>
+</html>
