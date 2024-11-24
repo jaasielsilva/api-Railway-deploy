@@ -4,6 +4,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import com.api.app.model.User;
 import com.api.app.repository.UserRepository;
 import com.api.app.service.StatusService;
 import com.api.app.service.UserService;
+
 
 
 @Controller
@@ -127,7 +130,7 @@ public class UserController {
  
     @GetMapping("/lista-usuarios")
     public String mostrarListaUsuarios(Model model) {
-        model.addAttribute("usuarios", userService.findAll()); // Corrigido para apenas uma chamada
+        model.addAttribute("usuarios", userService.findAll());
     return "lista-usuarios";
     }
 
@@ -137,4 +140,33 @@ public class UserController {
         List<User> list = userService.findAll();
         return ResponseEntity.ok().body(list);
     }
+
+    @GetMapping("/gerenciar-permissoes")
+    public String gerenciarPermissoes(Model model) {
+    // Busca apenas os nomes de usuário
+    List<String> nomesUsuarios = userService.buscarTodosUsernames();
+     // Busca todas as roles (permissões)
+     List<String> roles = userService.buscarTodosRoles();
+
+
+    // Adiciona as permissões ao modelo
+    model.addAttribute("permissoes", roles);
+
+    // Adiciona os nomes ao modelo
+    model.addAttribute("usuarios", nomesUsuarios);
+
+    // Retorna a página HTML
+    return "gerenciar-permissoes";
+    }
+
+    // Método para atualizar o role do usuário
+    @PostMapping("/atribuir-permissao")
+    
+ 
+    public String atribuirPermissao(@RequestParam("usuario") String usuario, @RequestParam("permissao") String permissao) {
+        userService.atualizarRoleUsuario(usuario, permissao);
+        return "redirect:/gerenciar-permissoes";  // Redireciona de volta para a página
+    }
 }
+
+

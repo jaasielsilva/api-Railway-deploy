@@ -2,6 +2,7 @@ package com.api.app.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -59,5 +60,29 @@ public class UserService {
     
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+       // Método no UserService para buscar todos os usernames
+    public List<String> buscarTodosUsernames() {
+    return userRepository.findAll().stream()
+            .map(User::getUsername) // Pega o username de cada User
+            .collect(Collectors.toList());
+    }
+
+    // Método para buscar todas as permissões (roles) dos usuários
+    public List<String> buscarTodosRoles() {
+        return userRepository.findAll().stream()
+            .map(User::getRole)  // Obtém o role de cada usuário
+            .distinct()          // Evita roles duplicadas
+            .collect(Collectors.toList());  // Retorna uma lista de roles
+    }
+
+    // Método para atualizar o role de um usuário
+    public void atualizarRoleUsuario(String username, String role) {
+        User usuario = userRepository.findByUsername(username);
+        if (usuario != null) {
+            usuario.setRole(role);
+            userRepository.save(usuario);  // Salva a alteração no banco de dados
+        }
     }
 }

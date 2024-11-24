@@ -197,25 +197,24 @@
             <div class="form-box">
                 <h3>Atribuir e Modificar Permissões</h3>
         
-                <label for="usuario">Selecionar Usuário</label>
-                <select id="usuario">
-                    <!-- Usando th:each para carregar os usuários dinamicamente -->
-                    <option th:each="usuario : ${usuarios}" 
-                            th:value="${usuario.id}" 
-                            th:text="${usuario.name}"></option>
-                </select>
-        
-                <label for="permissao">Permissão</label>
-                <select id="permissao">
-                    <!-- Usando th:each para carregar as permissões dinamicamente -->
-                    <option th:each="permissao : ${permissoes}" 
-                            th:value="${permissao.name}" 
-                            th:text="${permissao.name}"></option>
-                </select>
-            
+                <form method="POST" action="/atribuir-permissao">
+                    <label for="usuario">Selecionar Usuário</label>
+                    <select id="usuario" name="usuario">
+                        <option th:each="usuario : ${usuarios}" 
+                                th:value="${usuario}" 
+                                th:text="${usuario}"></option>
+                    </select>
                 
+                    <label for="permissao">Permissão</label>
+                    <select id="permissao" name="permissao">
+                        <option th:each="role : ${permissoes}" 
+                                th:value="${role}" 
+                                th:text="${role}"></option>
+                    </select>
 
-                <button onclick="atribuirPermissao()">Atribuir Permissão</button>
+                    <button type="submit">Atribuir Permissão</button>
+                </form>
+
             </div>
 
             <div class="footer">
@@ -225,15 +224,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        // Função para atribuir permissão
-        function atribuirPermissao() {
-            const usuario = document.getElementById('usuario').value;
-            const permissao = document.getElementById('permissao').value;
-            alert(`Permissão ${permissao} atribuída ao usuário com ID: ${usuario}`);
-        }
-    </script>
 
 </body>
 </html>
