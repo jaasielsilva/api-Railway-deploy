@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class RelatorioController {
 
+
     // Mapeia a página principal dos relatórios
     @GetMapping("/relatorio-sistemas")
     public String mostrarRelatorio(Model model) {
@@ -23,7 +24,6 @@ public class RelatorioController {
     model.addAttribute("relatorio", "Relatório Financeiro");
         return "relatorios_financeiros"; // Nome do template
     }
-
 
     // Relatório de Usuários Cadastrados
     @GetMapping("/relatorios-usuarios-cadastrados")
@@ -96,6 +96,8 @@ public class RelatorioController {
     public String exibirVisaoGeralDeProjetos() {
         return "visao_geral_de_projetos";  // Nome do arquivo HTML
     }
+
+    
 
     }
 
