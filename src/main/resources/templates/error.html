@@ -6,7 +6,8 @@
     <title>Erro</title>
 </head>
 <body>
-    <h1>Erro: Página não encontrada</h1>
+    <h1>Erro: <span th:text="${error}"></span></h1>
+    <p>Código do Erro: <span th:text="${status}"></span></p>
     <p>Desculpe, algo deu errado.</p>
 </body>
 </html>
