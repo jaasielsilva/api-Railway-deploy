@@ -55,4 +55,15 @@ public class User {
     public void atualizarUltimoAcesso() {
         this.ultimoAcesso = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES); // Trunca para minutos
     }
+
+    // Método para registrar ações no histórico
+    public void registrarAcao(EntityManager em, String action, String target, String details) {
+        ActionHistory actionHistory = new ActionHistory();
+        actionHistory.setUser(this);
+        actionHistory.setAction(action);
+        actionHistory.setTarget(target);
+        actionHistory.setDetails(details);
+        
+        em.persist(actionHistory); // Persistindo no banco de dados
+    }
 }
