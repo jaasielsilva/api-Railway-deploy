@@ -177,4 +177,8 @@ public class UserController {
         List<ActionHistory> historico = actionHistoryService.getHistorico(userId); // Certifique-se de que o serviço está implementado para retornar o histórico
         return ResponseEntity.ok(historico);
     }
+    @GetMapping("/atualizacao-usuarios")
+    public String atualizacaoUsuarios() {
+    return "atualizacao-usuarios"; // Nome do arquivo HTML na pasta `templates`
+    }
 }
