@@ -19,11 +19,12 @@ public class RelatorioController {
     }
 
     // Relatório Financeiro
-    @GetMapping("/relatorio_financeiro")
-    public String relatorioFinanceiro(Model model) {
-    model.addAttribute("relatorio", "Relatório Financeiro");
-        return "relatorios_financeiros"; // Nome do template
+    @GetMapping("/relatorios-financeiros")
+    public String relatoriosFinanceiros(Model model) {
+    // Adicione dados ao model, se quiser
+    return "relatorios_financeiros"; // nome do template Thymeleaf (relatorios_financeiros.html)
     }
+
 
     // Relatório de Usuários Cadastrados
     @GetMapping("/relatorios-usuarios-cadastrados")

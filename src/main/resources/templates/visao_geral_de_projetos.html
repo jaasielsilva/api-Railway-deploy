@@ -1,171 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Visão Geral de Projetos - Portal Administrativo</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
-    <style>
-        /* Resetting default browser styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Body styling */
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        /* Main container for the page */
-        .admin-container {
-            width: 100%;
-            max-width: 1200px;
-            display: flex;
-            flex-direction: row;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            margin: 20px;
-        }
-
-        /* Sidebar for navigation */
-        .sidebar {
-            background-color: #2c3e50;
-            color: white;
-            padding: 20px;
-            width: 250px;
-            border-radius: 8px 0 0 8px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .sidebar h2 {
-            font-size: 24px;
-            margin-bottom: 30px;
-        }
-
-        .sidebar ul {
-            list-style: none;
-            margin-top: 20px;
-        }
-
-        .sidebar ul li {
-            margin-bottom: 15px;
-        }
-
-        .sidebar ul li a {
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-            padding: 10px;
-            border-radius: 5px;
-            display: block;
-            transition: background-color 0.3s;
-        }
-
-        .sidebar ul li a:hover {
-            background-color: #34495e;
-        }
-
-        /* Main content area */
-        .main-content {
-            padding: 40px;
-            width: 100%;
-            max-width: 850px;
-        }
-
-        .main-content h1 {
-            font-size: 36px;
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-
-        .content-box {
-            background-color: #ecf0f1;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 40px;
-        }
-
-        .content-box h3 {
-            font-size: 24px;
-            color: #34495e;
-            margin-bottom: 20px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #2c3e50;
-            color: white;
-        }
-
-        td {
-            background-color: #f9f9f9;
-        }
-
-        /* Footer */
-        .footer {
-            margin-top: 50px;
-            font-size: 16px;
-            color: #7f8c8d;
-            text-align: center;
-        }
-
-        .footer a {
-            color: #3498db;
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .admin-container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .sidebar {
-                width: 100%;
-                border-radius: 8px 8px 0 0;
-                padding: 15px;
-            }
-
-            .main-content {
-                padding: 20px;
-                width: 100%;
-            }
-
-            .content-box {
-                margin-bottom: 20px;
-            }
-        }
-    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
 
@@ -175,65 +16,40 @@
         <div class="sidebar">
             <h2>Painel do CEO</h2>
             <ul>
-                <ul>
-                    <li><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-                    <li><a href="#"><i class="fas fa-users"></i> Usuários</a></li>
-                    <li><a href="#"><i class="fas fa-cogs"></i> Configurações</a></li>
-                    <li><a href="#"><i class="fas fa-chart-line"></i> Relatórios</a></li>
-                    <li><a href="#"><i class="fas fa-tachometer-alt"></i> Desempenho</a></li>
-                    <li><a href="#"><i class="fas fa-users-cog"></i> Gestão de Recursos Humanos</a></li>
-                    <li><a href="#"><i class="fas fa-project-diagram"></i> Projetos</a></li>
-                    <li><a href="#"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
-                </ul>
-                
+                <li><a href="/relatorios"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="/Usuarios"><i class="fas fa-users"></i> Usuários</a></li>
+                <li><a href="/configuracoes"><i class="fas fa-cogs"></i> Configurações</a></li>
+                <li><a href="/relatorio-sistemas"><i class="fas fa-chart-line"></i> Relatórios</a></li>
+                <li><a href="/recursos-humanos"><i class="fas fa-users-cog"></i> RH</a></li>
+                <li><a href="/gestao-projetos" class="active"><i class="fas fa-project-diagram"></i> Projetos</a></li>
+                <li><a href="/produtos"><i class="fas fa-box"></i> Produtos</a></li>
+                <li><a href="#"><i class="fas fa-shopping-cart"></i> PDV</a></li>
+                <li><a href="/"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
             </ul>
         </div>
 
         <!-- Main content area -->
         <div class="main-content">
             <h1>Visão Geral de Projetos</h1>
-            <p>Visão geral dos projetos em andamento e seu status.</p>
 
             <div class="content-box">
-                <h3>Resumo dos Projetos</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Projeto</th>
-                            <th>Status</th>
-                            <th>Responsável</th>
-                            <th>Data de Início</th>
-                            <th>Data de Conclusão</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Projeto B</td>
-                            <td>Concluído</td>
-                            <td>Maria</td>
-                            <td>01/06/2024</td>
-                            <td>15/10/2024</td>
-                        </tr>
-                        <tr>
-                            <td>Projeto C</td>
-                            <td>Em Andamento</td>
-                            <td>João</td>
-                            <td>15/07/2024</td>
-                            <td>20/12/2024</td>
-                        </tr>
-                        <tr>
-                            <td>Projeto D</td>
-                            <td>Planejado</td>
-                            <td>Ana</td>
-                            <td>01/11/2024</td>
-                            <td>30/03/2025</td>
-                        </tr>
-                        <!-- Adicionar mais projetos conforme necessário -->
-                    </tbody>
-                </table>
+                <h3>Estatísticas rápidas</h3>
+                <ul>
+                    <li><strong>Total de Projetos:</strong> <span th:text="${totalProjetos}">15</span></li>
+                    <li><strong>Projetos Concluídos:</strong> <span th:text="${projetosConcluidos}">8</span></li>
+                    <li><strong>Projetos em Andamento:</strong> <span th:text="${projetosAndamento}">6</span></li>
+                    <li><strong>Projetos Atrasados:</strong> <span th:text="${projetosAtrasados}">1</span></li>
+                </ul>
             </div>
 
-            <a href="/" class="footer-link">Voltar ao menu principal</a>
+           <div class="link-list">
+            <a href="/relatorios-financeiros"><i class="fas fa-file-invoice-dollar"></i> Relatórios Financeiros</a>
+            <a href="/analise-de-projetos"><i class="fas fa-chart-pie"></i> Análise de Projetos</a>
+            <a href="/gestao-de-riscos"><i class="fas fa-exclamation-triangle"></i> Gestão de Riscos</a>
+            <a href="/controle-de-estoque"><i class="fas fa-warehouse"></i> Controle de Estoque</a>
+            <a href="/performance-da-empresa"><i class="fas fa-chart-line"></i> Performance da Empresa</a>
+            <a href="/visao-geral-de-projetos"><i class="fas fa-project-diagram"></i> Visão Geral de Projetos</a>
+            </div>
 
             <div class="footer">
                 <p>Portal Exclusivo para o CEO - <a href="/">Sair</a></p>
