@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>PDV</title>
+</head>
+<body>
+<h1>PDV - Caixa</h1>
+<label for="codigo">Código de Barras:</label>
+<input type="text" id="codigo" autofocus>
+
+<h2>Carrinho</h2>
+<table border="1" id="carrinho">
+    <tr>
+        <th>Produto</th><th>Qtd</th><th>Preço</th><th>Total</th>
+    </tr>
+</table>
+<h3>Total: R$ <span id="total">0.00</span></h3>
+
+<script>
+let carrinho = {};
+let total = 0;
+
+document.getElementById("codigo").addEventListener("change", function () {
+    const codigo = this.value;
+    fetch(`/produtos/buscarPorCodigo/${codigo}`)
+        .then(res => {
+            if (!res.ok) throw new Error();
+            return res.json();
+        })
+        .then(produto => {
+            if (carrinho[produto.id]) {
+                carrinho[produto.id].quantidade += 1;
+            } else {
+                carrinho[produto.id] = { ...produto, quantidade: 1 };
+            }
+            renderCarrinho();
+            this.value = "";
+        })
+        .catch(() => {
+            alert("Produto não encontrado!");
+            this.value = "";
+        });
+});
+
+function renderCarrinho() {
+    const tbody = document.getElementById("carrinho");
+    tbody.innerHTML = '<tr><th>Produto</th><th>Qtd</th><th>Preço</th><th>Total</th></tr>';
+    total = 0;
+    for (let id in carrinho) {
+        const p = carrinho[id];
+        const subtotal = p.quantidade * p.preco;
+        total += subtotal;
+        tbody.innerHTML += `
+            <tr>
+                <td>${p.nome}</td>
+                <td>${p.quantidade}</td>
+                <td>R$ ${p.preco.toFixed(2)}</td>
+                <td>R$ ${subtotal.toFixed(2)}</td>
+            </tr>`;
+    }
+    document.getElementById("total").innerText = total.toFixed(2);
+}
+</script>
+</body>
+</html>

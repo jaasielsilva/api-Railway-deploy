@@ -1,103 +1,215 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Funcionário</title>
-    <style>
-        /* Resetting default browser styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PDV - Caixa</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; background: #f0f4f8; display: flex; }
 
-        /* Body styling */
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+    .sidebar {
+      width: 220px; background: #222831; color: #fff;
+      height: 100vh; padding: 20px; position: fixed;
+    }
 
-        /* Main container */
-        .container {
-            width: 100%;
-            max-width: 800px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            padding: 40px;
-            text-align: center;
-        }
+    .sidebar h2 { color: #00adb5; margin-bottom: 20px; }
 
-        .container h1 {
-            font-size: 36px;
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
+    .sidebar nav a {
+      display: block; color: #eee; padding: 10px;
+      text-decoration: none; margin-bottom: 10px;
+      border-radius: 4px;
+    }
 
-        .container ul {
-            list-style: none;
-            padding: 0;
-        }
+    .sidebar nav a:hover {
+      background: #00adb5; color: #222;
+    }
 
-        .container ul li {
-            margin: 15px 0;
-        }
+    .main {
+      margin-left: 220px; padding: 30px; width: calc(100% - 220px);
+    }
 
-        .container ul li a {
-            font-size: 18px;
-            color: #2c3e50;
-            text-decoration: none;
-            padding: 10px 20px;
-            background-color: #ecf0f1;
-            border-radius: 5px;
-            display: inline-block;
-            transition: background-color 0.3s;
-            width: 200px;
-        }
+    h1 { margin-bottom: 20px; color: #222; }
 
-        .container ul li a:hover {
-            background-color: #3498db;
-            color: white;
-        }
+    .barcode-input {
+      margin-bottom: 20px;
+    }
 
-        .footer {
-            margin-top: 30px;
-            font-size: 14px;
-            color: #7f8c8d;
-        }
+    .barcode-input input {
+      width: 100%; padding: 12px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
 
-        .footer a {
-            color: #3498db;
-            text-decoration: none;
-        }
+    .cart {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      max-height: 400px;
+      overflow-y: auto;
+    }
 
-        .footer a:hover {
-            text-decoration: underline;
-        }
-    </style>
+    .cart table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .cart th, .cart td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+
+    .cart tfoot td {
+      font-weight: bold;
+    }
+
+    .finalizar-btn {
+      margin-top: 15px;
+      background: #00adb5;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .finalizar-btn:hover {
+      background: #007b8a;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Bem-vindo ao Menu do Funcionário</h1>
-        <ul>
-            <li><a href="/visualizarTarefas">Visualizar Tarefas</a></li>
-            <li><a href="/relatoriosparainiciante">Visualizar Relatórios</a></li>
-            <li><a href="/configuracoes">Configurações</a></li>
-        </ul>
+  <aside class="sidebar">
+    <h2>Painel do CEO</h2>
+    <nav>
+      <a href="#">Dashboard</a>
+      <a href="#">Usuários</a>
+      <a href="#">Relatórios</a>
+      <a href="#">Produtos</a>
+      <a href="#">PDV</a>
+      <a href="#">Sair</a>
+    </nav>
+  </aside>
 
-        <div class="footer">
-            <p>&copy; 2024 Sistema de Gestão de Funcionários. Todos os direitos reservados.</p>
-            <p><a href="#">Política de Privacidade</a> | <a href="#">Termos de Uso</a></p>
-        </div>
+  <main class="main">
+    <h1>PDV - Caixa Rápido</h1>
+
+    <div class="barcode-input">
+      <input type="text" id="codigoBarras" placeholder="Escaneie ou digite o código de barras e pressione ENTER" />
     </div>
+
+    <div class="cart">
+      <table id="carrinho">
+        <thead>
+          <tr>
+            <th>Produto</th>
+            <th>Qtd</th>
+            <th>Preço</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody id="carrinho-body">
+          <!-- Produtos vão aqui -->
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="3">Total:</td>
+            <td id="total">R$ 0.00</td>
+          </tr>
+        </tfoot>
+      </table>
+      <button class="finalizar-btn">Finalizar Venda</button>
+    </div>
+  </main>
+
+  <script>
+    const input = document.getElementById("codigoBarras");
+    const carrinhoBody = document.getElementById("carrinho-body");
+    const totalElement = document.getElementById("total");
+    const carrinho = [];
+
+    input.addEventListener("keypress", async function (e) {
+      if (e.key === "Enter") {
+        const codigo = input.value.trim();
+        if (!codigo) return;
+
+        try {
+          const response = await fetch(`/produtos/buscar-por-codigo?codigo=${codigo}`);
+          if (!response.ok) throw new Error("Produto não encontrado");
+
+          const produto = await response.json();
+
+          let item = carrinho.find(p => p.codigoBarras === produto.codigoBarras);
+          if (item) {
+            item.qtd += 1;
+          } else {
+            carrinho.push({ ...produto, qtd: 1 });
+          }
+
+          renderCarrinho();
+          input.value = "";
+        } catch (err) {
+          alert("Produto não encontrado!");
+        }
+      }
+    });
+
+    function renderCarrinho() {
+      carrinhoBody.innerHTML = "";
+      let total = 0;
+      carrinho.forEach(p => {
+        const subtotal = p.preco * p.qtd;
+        total += subtotal;
+        carrinhoBody.innerHTML += `
+          <tr>
+            <td>${p.nome}</td>
+            <td>${p.qtd}</td>
+            <td>R$ ${p.preco.toFixed(2)}</td>
+            <td>R$ ${subtotal.toFixed(2)}</td>
+          </tr>
+        `;
+      });
+      totalElement.innerText = "R$ " + total.toFixed(2);
+    }
+
+    document.querySelector(".finalizar-btn").addEventListener("click", async function () {
+      if (carrinho.length === 0) {
+        alert("Carrinho vazio!");
+        return;
+      }
+
+      if (!confirm("Deseja realmente finalizar a venda?")) return;
+
+      try {
+        const response = await fetch("/venda/finalizar", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(carrinho.map(item => ({
+            codigoBarras: item.codigoBarras,
+            qtd: item.qtd
+          })))
+        });
+
+        const msg = await response.text();
+
+        if (!response.ok) {
+          alert("Erro: " + msg);
+          return;
+        }
+
+        alert(msg); // sucesso
+        carrinho.length = 0;
+        renderCarrinho();
+      } catch (error) {
+        alert("Erro ao finalizar venda: " + error.message);
+      }
+    });
+  </script>
 
 </body>
 </html>
